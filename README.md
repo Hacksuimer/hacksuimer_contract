@@ -2,6 +2,8 @@
 <img src="https://raw.githubusercontent.com/MystenLabs/sui/refs/heads/main/docs/site/static/img/logo.svg" alt="Logo" width="100" height="100">
 </p>
 
+## Hacksuimer
+
 ### **Project Description**
 
 Hacksuimer is a Web3-exclusive platform for managing events and hackathons, built on the **Sui blockchain**. The platform integrates **dynamic NFTs** to create and manage user profiles that reflect their participation, achievements, and rankings in hackathons. It also enables secure and transparent voting by judges and community members using **SUI tokens**, **USDC**, or **USDT**. Additionally, Hacksuimer incorporates **AI bots** to promote events, hackathons, and submitted projects, ensuring active user engagement and visibility.
