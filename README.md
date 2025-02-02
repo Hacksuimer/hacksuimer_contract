@@ -5,3 +5,15 @@
 
 # hacksuimer_contract
 HackSuimer Sui Contract 
+
+### Build
+
+`sui move build`
+
+### Test
+
+`sui move test`
+
+### Deploy to testnet 
+
+`sui move client publish --gas-budget 20000000000`
