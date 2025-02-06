@@ -2,7 +2,13 @@
 <img src="https://raw.githubusercontent.com/MystenLabs/sui/refs/heads/main/docs/site/static/img/logo.svg" alt="Logo" width="100" height="100">
 </p>
 
-# Hacksuimer
+<h1 align="center">Hacksuimer</h1>
+
+<p align="center">
+  <a href="" style="color: #a77dff">Hacksuimer</a> | <a href="" style="color: #a77dff">Pitchdeck</a> | <a href="" style="color: #a77dff">NFT Contract</a> | <a href="" style="color: #a77dff">Voting Contract</a>
+</p>
+
+<p align="center">Web3-exclusive platform for managing events and hackathons, built on the <code>Sui blockchain</code>.</p>
 
 ## Project Description
 
