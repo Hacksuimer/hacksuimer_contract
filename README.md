@@ -12,7 +12,7 @@
 
 ## Project Description
 
-Hacksuimer is a Web3-exclusive platform for managing events and hackathons, built on the **Sui blockchain**. The platform integrates **dynamic NFTs** to create and manage user profiles that reflect their participation, achievements, and rankings in hackathons. It also enables secure and transparent voting by judges and community members using **SUI tokens**, **USDC**, or **USDT**. Additionally, Hacksuimer incorporates **AI bots** to promote events, hackathons, and submitted projects, ensuring active user engagement and visibility.
+Hacksuimer is a Web3-exclusive platform for managing events and hackathons, built on the **Sui blockchain**. The platform integrates **dynamic NFTs** to create and manage user profiles that reflect their participation, achievements, and rankings in hackathons. It also enables secure and transparent voting by judges and community members using **SUI tokens**. Additionally, Hacksuimer incorporates **AI bots** to promote events, hackathons, and submitted projects, ensuring active user engagement and visibility.
 
 ## Problem Statement
 
@@ -52,7 +52,7 @@ Hacksuimer addresses these challenges by offering:
     - Judges vote on projects with transparency, secured by zkLogin for privacy.
     - Comments and feedback system to provide constructive insights.
 - **Community Voting:**
-    - General users participate in voting rounds using SUI, USDC, or USDT.
+    - General users participate in voting rounds using SUI.
 
 ### 4. AI-Powered Event Promotion
 
@@ -78,7 +78,7 @@ Hacksuimer addresses these challenges by offering:
     - **Project Submission:** Participants submit their projects, and the metadata is recorded on the blockchain.
     - **Judge Voting:** Judges **vote transparently on the blockchain** and can leave feedback for participants.
     - **AI Promotion:** The AI agent recommends personalized events to users and promotes hackathons & voting rounds.
-    - **Community Voting:** General users participate in community voting using **SUI, USDC, or USDT**.
+    - **Community Voting:** General users participate in community voting using **SUI**.
     - **NFT Update:** Each participant’s **profile NFT is dynamically updated** with **event history, awards, and project links**.
     - **Leaderboard Update:** Rankings are updated based on voting results, ensuring users receive **real-time updates**.
 
@@ -111,7 +111,7 @@ sequenceDiagram
     AIBot -->> User: Recommend Personalized Events
 
     Hacksuimer ->> Community: Announce Community Voting
-    Community ->> Hacksuimer: Submit Votes (SUI, USDC, USDT)
+    Community ->> Hacksuimer: Submit Votes (SUI)
     Hacksuimer ->> SuiBlockchain: Store Voting Data
     SuiBlockchain -->> Hacksuimer: Storage Successful
 
