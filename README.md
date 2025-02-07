@@ -2,13 +2,19 @@
 <img src="https://raw.githubusercontent.com/MystenLabs/sui/refs/heads/main/docs/site/static/img/logo.svg" alt="Logo" width="100" height="100">
 </p>
 
-## Hacksuimer
+<h1 align="center">Hacksuimer</h1>
 
-### **Project Description**
+<p align="center">
+  <a href="" style="color: #a77dff">Hacksuimer</a> | <a href="" style="color: #a77dff">Demo Video</a> | <a href="" style="color: #a77dff">NFT Contract</a> | <a href="" style="color: #a77dff">Voting Contract</a>
+</p>
 
-Hacksuimer is a Web3-exclusive platform for managing events and hackathons, built on the **Sui blockchain**. The platform integrates **dynamic NFTs** to create and manage user profiles that reflect their participation, achievements, and rankings in hackathons. It also enables secure and transparent voting by judges and community members using **SUI tokens**, **USDC**, or **USDT**. Additionally, Hacksuimer incorporates **AI bots** to promote events, hackathons, and submitted projects, ensuring active user engagement and visibility.
+<p align="center">Web3-exclusive platform for managing events and hackathons, built on the <code>Sui blockchain</code>.</p>
 
-### **Problem Statement**
+## Project Description
+
+Hacksuimer is a Web3-exclusive platform for managing events and hackathons, built on the **Sui blockchain**. The platform integrates **dynamic NFTs** to create and manage user profiles that reflect their participation, achievements, and rankings in hackathons. It also enables secure and transparent voting by judges and community members using **SUI tokens**. Additionally, Hacksuimer incorporates **AI bots** to promote events, hackathons, and submitted projects, ensuring active user engagement and visibility.
+
+## Problem Statement
 
 Traditional event and hackathon platforms face several challenges:
 
@@ -17,7 +23,7 @@ Traditional event and hackathon platforms face several challenges:
 3. **Engagement Issues:** Event promotion often fails to reach the right audience, leading to low participation rates.
 4. **Privacy Concerns:** Sensitive information of participants and judges is not always adequately protected.
 
-### **Solution**
+## Solution
 
 Hacksuimer addresses these challenges by offering:
 
@@ -26,45 +32,45 @@ Hacksuimer addresses these challenges by offering:
 3. **AI-Powered Promotions:** AI agents promote events, hackathons, and projects, increasing visibility and user engagement.
 4. **Enhanced Privacy:** zkLogin ensures secure and private authentication for both judges and participants.
 
-### **Key Features**
+## Key Features
 
-#### **1. User Login & Profile Management**
+### 1. User Login & Profile Management
 
 - Wallet or email-based login options.
 - Dynamic NFTs that act as user profiles, showcasing event history, awards, and rankings.
 - NFTs include links to projects submitted by the user.
 
-#### **2. Hackathon & Event Creation**
+### 2. Hackathon & Event Creation
 
 - Organizers can create and manage hackathons or events with customizable settings.
 - Inspired by the interface of [JokeRace](https://www.jokerace.io/contest/new).
 - Admin dashboard allows seamless event configuration.
 
-#### **3. Transparent Voting System**
+### 3. Transparent Voting System
 
 - **Judge Voting:**
     - Judges vote on projects with transparency, secured by zkLogin for privacy.
     - Comments and feedback system to provide constructive insights.
 - **Community Voting:**
-    - General users participate in voting rounds using SUI, USDC, or USDT.
+    - General users participate in voting rounds using SUI.
 
-#### **4. AI-Powered Event Promotion**
+### 4. AI-Powered Event Promotion
 
 - AI bots actively promote upcoming events, hackathons, and projects.
 - Provides personalized recommendations for users based on their participation history.
 
-#### **5. Leaderboard and Achievements**
+### 5. Leaderboard and Achievements
 
 - Displays top participants based on awards, event history, and votes.
 - Dynamic NFTs are updated with users' latest achievements and rankings.
 
-#### **6. Privacy and Security**
+### 6. Privacy and Security
 
 - zkLogin ensures that user and judge information is secure and private.
 
 > Hacksuimer combines the best of Web3 technologies to create a transparent, engaging, and secure platform for hackathon and event management.
 
-### User Flow Diagram
+## User Flow Diagram
 
 - **🖥️ Explanation**
     - **User Login:** Users log in via **wallet connection or email**, with **zkLogin** ensuring enhanced security.
@@ -72,7 +78,7 @@ Hacksuimer addresses these challenges by offering:
     - **Project Submission:** Participants submit their projects, and the metadata is recorded on the blockchain.
     - **Judge Voting:** Judges **vote transparently on the blockchain** and can leave feedback for participants.
     - **AI Promotion:** The AI agent recommends personalized events to users and promotes hackathons & voting rounds.
-    - **Community Voting:** General users participate in community voting using **SUI, USDC, or USDT**.
+    - **Community Voting:** General users participate in community voting using **SUI**.
     - **NFT Update:** Each participant’s **profile NFT is dynamically updated** with **event history, awards, and project links**.
     - **Leaderboard Update:** Rankings are updated based on voting results, ensuring users receive **real-time updates**.
 
@@ -105,7 +111,7 @@ sequenceDiagram
     AIBot -->> User: Recommend Personalized Events
 
     Hacksuimer ->> Community: Announce Community Voting
-    Community ->> Hacksuimer: Submit Votes (SUI, USDC, USDT)
+    Community ->> Hacksuimer: Submit Votes (SUI)
     Hacksuimer ->> SuiBlockchain: Store Voting Data
     SuiBlockchain -->> Hacksuimer: Storage Successful
 
@@ -118,7 +124,7 @@ sequenceDiagram
 
 ```
 
-### Flowchart
+## Flowchart
 
 ```mermaid
 flowchart TB;
