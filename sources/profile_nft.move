@@ -35,8 +35,8 @@ module hacksuimer_contract::profile_nft {
     // Project history
     public struct ProjectHistory has key,store {
         id: UID,
-        project_id: address,
-        hackathon_id: address,
+        project_id: ID,
+        hackathon_id: ID,
         submission_time: u64,
         score: u64
     }
@@ -138,8 +138,8 @@ module hacksuimer_contract::profile_nft {
     // Add project history
     public fun add_project(
         profile: &mut ProfileNFT,
-        project_id: address,
-        hackathon_id: address,
+        project_id: ID,
+        hackathon_id: ID,
         score: u64,
         ctx: &mut TxContext
     ) {
