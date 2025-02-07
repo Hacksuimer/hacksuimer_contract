@@ -442,15 +442,15 @@ module hacksuimer_contract::hacksuimer {
         // Update the project's total score
         proposal.total_score = *table::borrow(&hackathon.votes, proposal_id);
 
-        // 更新排名
-        // Update ranking
-        hacksuimer_sorting::update_ranks(
-            &mut hackathon.ranking_config,
-            proposal_id,
-            0,
-            proposal.total_score,
-            proposal.creation_time
-        );
+        // // 更新排名
+        // // Update ranking
+        // hacksuimer_sorting::update_ranks(
+        //     &mut hackathon.ranking_config,
+        //     proposal_id,
+        //     0,
+        //     proposal.total_score,
+        //     proposal.creation_time
+        // );
         // 释放社区投票事件
         // Release the community vote event
         event::emit(CommunityVoteEvent {
