@@ -23,7 +23,7 @@ jobs:
       
       - name: Install Sui
         run: |
-          cargo install --locked --git https://github.com/MystenLabs/sui.git --branch devnet sui
+          cargo install --locked --git https://github.com/MystenLabs/sui.git --branch testnet sui --features tracing
           
       - name: Run Move Tests
         run: |
