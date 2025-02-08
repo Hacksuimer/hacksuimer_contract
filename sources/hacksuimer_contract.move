@@ -173,6 +173,25 @@ module hacksuimer_contract::hacksuimer {
         judge_comments: Table<address, JudgeComment>  // 评委评论 // Judge comments
     }
 
+    public entry fun update_hackathon_status(
+        hackathon: &mut HackathonEvent,
+        clock: &Clock,
+        _ctx: &mut TxContext
+    ) {
+        let current_time = clock::timestamp_ms(clock);
+        
+        // 根据当前时间更新状态
+        if (current_time < hackathon.start_time) {
+            hackathon.status = STATE_NOT_STARTED;
+        } else if (current_time >= hackathon.start_time && current_time < hackathon.start_time + hackathon.voting_delay) {
+            hackathon.status = STATE_ACTIVE;
+        } else if (current_time >= hackathon.start_time + hackathon.voting_delay && current_time < hackathon.end_time) {
+            hackathon.status = STATE_VOTING;
+        } else if (current_time >= hackathon.end_time) {
+            hackathon.status = STATE_ENDED;
+        }
+    }
+
     // 创建黑客松活动
     // Create a hackathon event
     public entry fun create_hacksuimer_event(
@@ -189,6 +208,7 @@ module hacksuimer_contract::hacksuimer {
         max_proposal_count: u64,
         judges: vector<address>,
         judge_vote_limits: vector<u64>,
+        clock: &Clock,
         ctx: &mut TxContext
     ) {
         // 验证参数
@@ -231,7 +251,7 @@ module hacksuimer_contract::hacksuimer {
         };
 
         let ranking_config = hacksuimer_sorting::init_ranking(max_proposal_count);
-        let hackathon = HackathonEvent {
+        let mut hackathon = HackathonEvent {
             id: object::new(ctx),
             name: string::utf8(name),
             description: string::utf8(description),
@@ -255,6 +275,7 @@ module hacksuimer_contract::hacksuimer {
             ranking_config,
             user_voted: table::new(ctx)
         };
+        update_hackathon_status(&mut hackathon, clock, ctx);
         // 释放创建事件
         // Release the creation event
         event::emit(HackathonCreatedEvent {
@@ -264,7 +285,7 @@ module hacksuimer_contract::hacksuimer {
             start_time: contest_start,
             end_time
         });
-        transfer::share_object(hackathon)
+        transfer::share_object(hackathon);
     }
 
     // 提交项目
@@ -278,6 +299,7 @@ module hacksuimer_contract::hacksuimer {
         clock: &Clock,
         ctx: &mut TxContext
     ) {
+        update_hackathon_status(hackathon, clock, ctx);
         // 验证状态
         // Validate status
         assert!(hackathon.status == STATE_ACTIVE, EInvalidState);
@@ -352,6 +374,7 @@ module hacksuimer_contract::hacksuimer {
         clock: &Clock,
         ctx: &mut TxContext
     ) {
+        update_hackathon_status(hackathon, clock, ctx);
         let sender = tx_context::sender(ctx);
         assert!(vector::contains(&hackathon.judges, &sender), ENotAuthorized);
         assert!(hackathon.status == STATE_VOTING, EInvalidState);
@@ -420,8 +443,10 @@ module hacksuimer_contract::hacksuimer {
         hackathon: &mut HackathonEvent,
         proposal: &mut Proposal,
         wallet_balance: &Balance<SUI>,
+        clock: &Clock,
         ctx: &mut TxContext
     ) {
+        update_hackathon_status(hackathon, clock, ctx);
         let sender = tx_context::sender(ctx);
         assert!(hackathon.status == STATE_VOTING, EInvalidState);
         assert!(!table::contains(&hackathon.user_voted, sender), EAlreadyVoted);

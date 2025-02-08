@@ -36,19 +36,23 @@ module hacksuimer_contract::hacksuimer_tests {
     fun create_test_scenario(): Scenario {
         ts::begin(CREATOR)
     }
+    fun advance_clock_to_voting_phase(clock: &mut Clock) {
+        clock::increment_for_testing(clock, 15000); // 确保超过 voting_delay
+    }
 
     // 辅助函数：创建测试用 Clock
     fun create_test_clock(scenario: &mut Scenario): Clock {
         ts::next_tx(scenario, CREATOR);
         clock::create_for_testing(ts::ctx(scenario))
     }
-    fun set_hackathon_status(scenario: &mut Scenario, status: u8) {
+
+    fun set_hackathon_status(scenario: &mut Scenario, status: u8, clock: &Clock) {
         ts::next_tx(scenario, CREATOR);
         let mut hackathon = ts::take_shared<HackathonEvent>(scenario);
         hacksuimer::set_status_for_testing(&mut hackathon, status);
+        hacksuimer::update_hackathon_status(&mut hackathon, clock, ts::ctx(scenario));
         ts::return_shared(hackathon);
     }
-
 
     // 辅助函数：创建黑客松活动
     fun create_test_hackathon(scenario: &mut Scenario, clock: &Clock) {
@@ -90,6 +94,7 @@ module hacksuimer_contract::hacksuimer_tests {
             max_proposal_count,
             judges,
             judge_vote_limits,
+            clock,
             ts::ctx(scenario)
         );
     }
@@ -119,7 +124,7 @@ module hacksuimer_contract::hacksuimer_tests {
         
         create_test_hackathon(&mut scenario, &clock);
         // 设置活动状态为 ACTIVE
-        set_hackathon_status(&mut scenario, 1); // STATE_ACTIVE
+        set_hackathon_status(&mut scenario, 1,&clock); // STATE_ACTIVE
         
         ts::next_tx(&mut scenario, USER1);
         {
@@ -148,7 +153,7 @@ module hacksuimer_contract::hacksuimer_tests {
         let clock = create_test_clock(&mut scenario);
         
         create_test_hackathon(&mut scenario, &clock);
-        set_hackathon_status(&mut scenario, 1); // 设置为 ACTIVE
+        set_hackathon_status(&mut scenario, 1,&clock); // 设置为 ACTIVE
         
         ts::next_tx(&mut scenario, USER1);
         {
@@ -189,12 +194,12 @@ module hacksuimer_contract::hacksuimer_tests {
     #[test]
     fun test_judge_vote() {
         let mut scenario = create_test_scenario();
-        let clock = create_test_clock(&mut scenario);
+        let mut clock = create_test_clock(&mut scenario);
         
+        // 创建活动
         create_test_hackathon(&mut scenario, &clock);
-        set_hackathon_status(&mut scenario, 1); // 设置为 ACTIVE 以提交提案
         
-        // 提交提案
+        // 提交提案阶段
         ts::next_tx(&mut scenario, USER1);
         {
             let mut hackathon = ts::take_shared<HackathonEvent>(&scenario);
@@ -209,18 +214,30 @@ module hacksuimer_contract::hacksuimer_tests {
             ts::return_shared(hackathon);
         };
         
-        set_hackathon_status(&mut scenario, 2); // 设置为 VOTING
+        // 推进时间到投票阶段并更新状态
+        clock::increment_for_testing(&mut clock, 11000); // 超过 voting_delay
+        ts::next_tx(&mut scenario, CREATOR);
+        {
+            let mut hackathon = ts::take_shared<HackathonEvent>(&scenario);
+            hacksuimer::update_hackathon_status(&mut hackathon, &clock, ts::ctx(&mut scenario));
+            ts::return_shared(hackathon);
+        };
         
         // 评委投票
         ts::next_tx(&mut scenario, JUDGE1);
         {
             let mut hackathon = ts::take_shared<HackathonEvent>(&scenario);
             let mut proposal = ts::take_shared<Proposal>(&scenario);
+            
+            // 验证状态
+            let status = hacksuimer::get_hackathon_status(&hackathon);
+            assert!(status == 2, 101); // STATE_VOTING
+            
             hacksuimer::judge_vote(
                 &mut hackathon,
                 &mut proposal,
                 50,
-                b"Good project!",
+                b"Good project",
                 &clock,
                 ts::ctx(&mut scenario)
             );
@@ -239,9 +256,6 @@ module hacksuimer_contract::hacksuimer_tests {
         
         create_test_hackathon(&mut scenario, &clock);
         
-        // 首先设置状态为 ACTIVE 以允许提交提案
-        set_hackathon_status(&mut scenario, 1); // STATE_ACTIVE
-        
         // 提交提案
         ts::next_tx(&mut scenario, USER1);
         {
@@ -257,8 +271,14 @@ module hacksuimer_contract::hacksuimer_tests {
             ts::return_shared(hackathon);
         };
         
-        // 将状态设置为 VOTING 以允许投票
-        set_hackathon_status(&mut scenario, 2); // STATE_VOTING
+        // 推进时间到投票阶段并更新状态
+        clock::increment_for_testing(&mut clock, 11000); // 超过 voting_delay
+        ts::next_tx(&mut scenario, CREATOR);
+        {
+            let mut hackathon = ts::take_shared<HackathonEvent>(&scenario);
+            hacksuimer::update_hackathon_status(&mut hackathon, &clock, ts::ctx(&mut scenario));
+            ts::return_shared(hackathon);
+        };
         
         // 社区投票
         ts::next_tx(&mut scenario, USER2);
@@ -267,10 +287,15 @@ module hacksuimer_contract::hacksuimer_tests {
             let mut proposal = ts::take_shared<Proposal>(&scenario);
             let wallet_balance = balance::create_for_testing<SUI>(2_000_000_000); // 2 SUI
             
+            // 验证状态
+            let status = hacksuimer::get_hackathon_status(&hackathon);
+            assert!(status == 2, 101); // STATE_VOTING
+            
             hacksuimer::community_vote(
                 &mut hackathon,
                 &mut proposal,
                 &wallet_balance,
+                &clock,
                 ts::ctx(&mut scenario)
             );
             
