@@ -140,6 +140,7 @@ module hacksuimer_contract::test_profile_nft {
         test::end(scenario);
     }
 
+
     #[test]
     fun test_add_project_success() {
         let mut scenario = create_profile_scenario();

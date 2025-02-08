@@ -61,8 +61,11 @@ module hacksuimer_contract::profile_nft {
         image_url: vector<u8>,
         ctx: &mut TxContext
     ) {
+        // Validate name and image URL
         assert!(std::string::length(&name) > 0, EINVALID_NAME);
         assert!(vector::length(&image_url) > 0, EINVALID_IMAGE);
+
+
         let sender = tx_context::sender(ctx);
         let mut profile = ProfileNFT {
             id: object::new(ctx),
