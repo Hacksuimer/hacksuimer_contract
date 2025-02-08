@@ -3,6 +3,7 @@ module hacksuimer_contract::test_profile_nft {
     use sui::test_scenario::{Self as test, Scenario, next_tx, ctx};
     use std::string::{Self};
     use hacksuimer_contract::profile_nft::{Self, ProfileNFT};
+    use sui::object::{Self, ID};
 
     // Test addresses
     const ADMIN: address = @0xAD;
@@ -147,8 +148,8 @@ module hacksuimer_contract::test_profile_nft {
             let mut profile = test::take_from_sender<ProfileNFT>(&scenario);
             profile_nft::add_project(
                 &mut profile,
-                @0x1,
-                @0x2,
+                object::id_from_address(@0x1),
+                object::id_from_address(@0x2),
                 100,
                 ctx(&mut scenario)
             );
@@ -166,8 +167,8 @@ module hacksuimer_contract::test_profile_nft {
             let mut profile = test::take_from_address<ProfileNFT>(&scenario, ADMIN);
             profile_nft::add_project(
                 &mut profile,
-                @0x1,
-                @0x2,
+                object::id_from_address(@0x1),
+                object::id_from_address(@0x2),
                 100,
                 ctx(&mut scenario)
             );

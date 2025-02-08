@@ -218,4 +218,14 @@ module hacksuimer_contract::hacksuimer_sorting {
     public fun is_sorting_enabled(config: &RankingConfig): bool {
         config.sorting_enabled
     }
+
+
+    #[test_only]
+    public fun destroy_for_testing(config: RankingConfig) {
+        let RankingConfig { 
+            sorting_enabled: _,
+            rank_limit: _,
+            sorted_projects: _
+        } = config;
+    }
 }

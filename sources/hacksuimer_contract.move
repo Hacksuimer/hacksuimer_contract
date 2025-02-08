@@ -82,6 +82,7 @@ module hacksuimer_contract::hacksuimer {
     const EMaxProposalsPerUserReached: u64 = 7;
     const EMaxProposalsReached: u64 = 8;
     const ESubmissionDeadlinePassed: u64 = 9;
+    const EAlreadyVoted: u64 = 10;
 
     // 活动状态
     // Event status
@@ -149,7 +150,8 @@ module hacksuimer_contract::hacksuimer {
         votes: Table<ID, u64>,  // 总票数表 // Total votes table
         judge_vote_limits: Table<address, u64>,  // 评委投票限制 // Judge vote limits
         user_proposal_counts: Table<address, u64>,
-        ranking_config: RankingConfig
+        ranking_config: RankingConfig,
+        user_voted: Table<address, bool>, // 用户是否已投票 // Whether the user has voted
     }
 
 
@@ -250,7 +252,8 @@ module hacksuimer_contract::hacksuimer {
             votes: table::new(ctx),
             judge_vote_limits: judge_limits_table,
             user_proposal_counts: table::new(ctx),
-            ranking_config
+            ranking_config,
+            user_voted: table::new(ctx)
         };
         // 释放创建事件
         // Release the creation event
@@ -268,7 +271,7 @@ module hacksuimer_contract::hacksuimer {
     // Submit a project
     public entry fun submit_proposal(
         hackathon: &mut HackathonEvent,
-        profile: &mut profile_nft::ProfileNFT,
+        // profile: &mut profile_nft::ProfileNFT,
         name: vector<u8>,
         description: vector<u8>,
         repository_url: vector<u8>,
@@ -417,9 +420,11 @@ module hacksuimer_contract::hacksuimer {
         hackathon: &mut HackathonEvent,
         proposal: &mut Proposal,
         wallet_balance: &Balance<SUI>,
-        _ctx: &mut TxContext
+        ctx: &mut TxContext
     ) {
+        let sender = tx_context::sender(ctx);
         assert!(hackathon.status == STATE_VOTING, EInvalidState);
+        assert!(!table::contains(&hackathon.user_voted, sender), EAlreadyVoted);
         
         // 获取钱包余额并计算票数
         // Get the wallet balance and calculate the number of votes
@@ -437,6 +442,10 @@ module hacksuimer_contract::hacksuimer {
             let current_votes = table::borrow_mut(&mut hackathon.votes, proposal_id);
             *current_votes = *current_votes + votes;
         };
+
+        // 标记用户已投票
+        // Mark the user as voted
+        table::add(&mut hackathon.user_voted, sender, true);
 
         // 更新项目总分
         // Update the project's total score
@@ -477,5 +486,16 @@ module hacksuimer_contract::hacksuimer {
             hackathon_id: object::uid_to_inner(&hackathon.id),
             end_time: clock::timestamp_ms(clock)
         });
+    }
+
+    // 获取活动状态
+    // Get the event status
+    public fun get_hackathon_status(hackathon: &HackathonEvent): u8 {
+        hackathon.status
+    }
+
+    #[test_only]
+    public fun set_status_for_testing(hackathon: &mut HackathonEvent, status: u8) {
+        hackathon.status = status;
     }
 }
