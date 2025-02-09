@@ -5,7 +5,7 @@
 <h1 align="center">Hacksuimer</h1>
 
 <p align="center">
-  <a href="" style="color: #a77dff">Hacksuimer</a> | <a href="" style="color: #a77dff">Demo Video</a> | <a href="https://www.figma.com/deck/VUlDSfk1wKnSCnwtbF2ntL" style="color: #a77dff">Pitchdeck</a> | <a href="" style="color: #a77dff">NFT Contract</a> | <a href="" style="color: #a77dff">Voting Contract</a>
+  <a href="" style="color: #a77dff">Hacksuimer</a> | <a href="" style="color: #a77dff">Demo Video</a> | <a href="https://www.figma.com/deck/VUlDSfk1wKnSCnwtbF2ntL" style="color: #a77dff">Pitchdeck</a> | <a href="https://github.com/Hacksuimer/hacksuimer_contract/tree/main/sources" style="color: #a77dff">NFT Contract</a> | <a href="" style="color: #a77dff">Voting Contract</a>
 </p>
 
 <p align="center">Web3-exclusive platform for managing events and hackathons, built on the <code>Sui blockchain</code>.</p>
