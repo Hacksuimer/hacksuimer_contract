@@ -5,7 +5,7 @@
 <h1 align="center">Hacksuimer</h1>
 
 <p align="center">
-  <a href="https://hacksuimer-client-mao3axilf-sadiq-team.vercel.app/" style="color: #a77dff">Hacksuimer</a> | <a href="" style="color: #a77dff">Demo Video</a> | <a href="https://www.figma.com/deck/VUlDSfk1wKnSCnwtbF2ntL" style="color: #a77dff">Pitchdeck</a> | <a href="https://github.com/Hacksuimer/hacksuimer_contract/tree/main/sources" style="color: #a77dff">NFT&Voting Contract</a> | <a href="" style="color: #a77dff">AI agent Contract</a>
+  <a href="https://hacksuimer-client.vercel.app/" style="color: #a77dff">Hacksuimer</a> | <a href="" style="color: #a77dff">Demo Video</a> | <a href="https://www.figma.com/deck/VUlDSfk1wKnSCnwtbF2ntL" style="color: #a77dff">Pitchdeck</a> | <a href="https://github.com/Hacksuimer/hacksuimer_contract/tree/main/sources" style="color: #a77dff">NFT&Voting Contract</a> | <a href="" style="color: #a77dff">AI agent Contract</a>
 </p>
 
 <p align="center">Web3-exclusive platform for managing events and hackathons, built on the <code>Sui blockchain</code>.</p>
